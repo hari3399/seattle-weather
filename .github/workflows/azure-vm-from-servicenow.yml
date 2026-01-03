@@ -1,0 +1,35 @@
+name: Azure VM from ServiceNow
+
+on:
+  repository_dispatch:
+    types: [azure_vm_provision]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Print payload
+        run: |
+          echo "Payload:"
+          echo '${{ toJson(github.event.client_payload) }}'
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        run: |
+          terraform apply -auto-approve \
+            -var="vm_name=${{ github.event.client_payload.vm_name }}" \
+            -var="vm_size=${{ github.event.client_payload.vm_size }}" \
+            -var="location=${{ github.event.client_payload.azure_region }}" \
+            -var="resource_group_name=${{ github.event.client_payload.resource_group_name }}"
