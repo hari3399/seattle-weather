@@ -20,7 +20,9 @@ jobs:
 
       - name: Terraform Init
         working-directory: terraform-azure-vm
-        run: terraform init
+        run: |
+          rm -rf .terraform .terraform.lock.hcl
+          terraform init
 
       - name: Terraform Apply
         working-directory: terraform-azure-vm
