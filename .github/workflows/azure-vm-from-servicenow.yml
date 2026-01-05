@@ -19,9 +19,11 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
+        working-directory: seattle-weather/terraform-azure-vm
         run: terraform init
 
       - name: Terraform Apply
+        working-directory: seattle-weather/terraform-azure-vm
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
@@ -31,5 +33,5 @@ jobs:
           terraform apply -auto-approve \
             -var="vm_name=${{ github.event.client_payload.vm_name }}" \
             -var="vm_size=${{ github.event.client_payload.vm_size }}" \
-            -var="location=${{ github.event.client_payload.azure_region }}" \
-            -var="resource_group_name=${{ github.event.client_payload.resource_group_name }}"
+            -var="location=${{ github.event.client_payload.region }}" \
+            -var="resource_group_name=${{ github.event.client_payload.resource_group }}"

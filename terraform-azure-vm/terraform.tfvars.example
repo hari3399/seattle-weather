@@ -1,0 +1,13 @@
+# Example variables for terraform-azure-vm
+vm_name = "example-vm"
+vm_size = "Standard_B1ms"
+location = "eastus"
+# Name of the existing or to-be-created resource group (this is required)
+resource_group_name = "rg-poc-dev"
+
+# If your networking is managed centrally set create_network = false and
+# provide the names of an existing vnet/subnet in the same resource group.
+# If you want the module to create a vnet/subnet, set create_network = true.
+create_network = false
+vnet_name = "shared-vnet"
+subnet_name = "shared-subnet"
