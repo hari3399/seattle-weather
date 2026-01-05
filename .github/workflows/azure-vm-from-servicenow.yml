@@ -19,11 +19,11 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
-        working-directory: seattle-weather/terraform-azure-vm
+        working-directory: terraform-azure-vm
         run: terraform init
 
       - name: Terraform Apply
-        working-directory: seattle-weather/terraform-azure-vm
+        working-directory: terraform-azure-vm
         env:
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
