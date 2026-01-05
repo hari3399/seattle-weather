@@ -37,9 +37,3 @@ variable "subnet_name" {
 	type        = string
 	default     = "snet-tf"
 }
-
-variable "create_network" {
-	description = "If true, module will create a VNet and Subnet. If false, it will use existing ones by name in the given resource group."
-	type        = bool
-	default     = false
-}
